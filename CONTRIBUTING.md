@@ -72,6 +72,8 @@ change is deliberate — update the guard test and explain why in your PR. See
 
 This project uses [Changesets](https://github.com/changesets/changesets) for versioning and publishing.
 
+- When a version bump lands (via the Changesets 'Version Packages' PR), also update the `VERSION` constant in `src/index.ts` to match `package.json` — they must stay in sync.
+
 **Contributors:** add a changeset for every PR that changes behaviour:
 
 ```bash
