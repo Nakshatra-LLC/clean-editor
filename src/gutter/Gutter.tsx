@@ -4,9 +4,9 @@ export function openSlashAt(editor: Editor): void {
   editor.chain().focus().insertContent("/").run();
 }
 
-export function Gutter({ editor }: { editor: Editor }) {
+export function Gutter({ editor, top }: { editor: Editor; top?: number | null }) {
   return (
-    <div className="glass-gutter" contentEditable={false}>
+    <div className="glass-gutter" contentEditable={false} style={top == null ? undefined : { top }}>
       <button
         type="button"
         aria-label="Insert block"

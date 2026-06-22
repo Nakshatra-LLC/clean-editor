@@ -27,6 +27,8 @@ export function GlassEditor({
   value, onChange, ai, extensions, slashItems, bubbleItems, placeholder, className, editable = true,
 }: GlassEditorProps) {
   const [askOpen, setAskOpen] = useState(false);
+  const [gutterTop, setGutterTop] = useState<number | null>(null);
+  const rootRef = useRef<HTMLDivElement>(null);
   const onChangeRef = useRef(onChange);
   useEffect(() => { onChangeRef.current = onChange; }, [onChange]);
 
@@ -55,11 +57,32 @@ export function GlassEditor({
     }
   }, [editor, value]);
 
+  useEffect(() => {
+    if (!editor) return;
+    const update = () => {
+      const root = rootRef.current;
+      if (!root) return;
+      try {
+        const { from } = editor.state.selection;
+        const coords = editor.view.coordsAtPos(from);
+        const rootRect = root.getBoundingClientRect();
+        setGutterTop(coords.top - rootRect.top);
+      } catch { /* position not available yet */ }
+    };
+    editor.on("selectionUpdate", update);
+    editor.on("transaction", update);
+    update();
+    return () => {
+      editor.off("selectionUpdate", update);
+      editor.off("transaction", update);
+    };
+  }, [editor]);
+
   const bubble = [...defaultBubbleItems, ...(bubbleItems ?? [])];
 
   return (
-    <div className={`glass-editor ${className ?? ""}`}>
-      {editor && <Gutter editor={editor} />}
+    <div ref={rootRef} className={`glass-editor ${className ?? ""}`}>
+      {editor && <Gutter editor={editor} top={gutterTop} />}
       {editor && <GlassBubbleMenu editor={editor} items={bubble} />}
       <EditorContent editor={editor} />
       {editor && askOpen && ai && (
