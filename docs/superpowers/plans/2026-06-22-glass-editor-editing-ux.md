@@ -1433,10 +1433,22 @@ Add, inside `<header className="demo-header">`, above the `<h1>`:
 <img src="/mark.svg" alt="" width={36} height={36} className="demo-logo" />
 ```
 
-(The `mark.svg` is already in `demo/public/`.) In `demo/src/styles.css`, add light/dark page chrome that defers to the editor theme, e.g.:
+(The `mark.svg` is already in `demo/public/`.) Also make the layout a **split view — editor on the left, JSON preview on the right** (the `App.tsx` `.demo-main` already wraps `.editor-wrapper` + `.json-preview`; this is a CSS-only change). In `demo/src/styles.css`, add the two-column grid + light/dark page chrome that defers to the editor theme:
 
 ```css
 .demo-logo { vertical-align: middle; margin-right: 0.5rem; }
+.demo-main {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.8fr);
+  gap: 1.5rem;
+  align-items: start;
+}
+.json-preview { position: sticky; top: 1rem; }
+.json-preview pre { max-height: 80vh; overflow: auto; }
+@media (max-width: 860px) {
+  .demo-main { grid-template-columns: 1fr; }   /* stack on narrow screens */
+  .json-preview { position: static; }
+}
 @media (prefers-color-scheme: dark) {
   body { background: #0b0b0f; color: #e8e8ea; }
   .editor-wrapper { border-color: #2a2b35; }
