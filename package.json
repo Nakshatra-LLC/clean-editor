@@ -8,7 +8,7 @@
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": { ".": { "types": "./dist/index.d.ts", "import": "./dist/index.js" }, "./styles.css": "./dist/styles.css" },
-  "files": ["dist"],
+  "files": ["dist", "!dist/dts-check"],
   "sideEffects": ["**/*.css"],
   "scripts": {
     "build": "vite build && tsc -p tsconfig.build.json --emitDeclarationOnly",
