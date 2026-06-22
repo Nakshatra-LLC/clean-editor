@@ -70,7 +70,8 @@ export function GlassEditor({
         const { from } = editor.state.selection;
         const coords = editor.view.coordsAtPos(from);
         const rootRect = root.getBoundingClientRect();
-        setGutterTop(coords.top - rootRect.top);
+        const next = coords.top - rootRect.top;
+        setGutterTop(prev => prev === next ? prev : next);
       } catch { /* position not available yet */ }
     };
     editor.on("selectionUpdate", update);
@@ -85,7 +86,7 @@ export function GlassEditor({
   const bubble = [...defaultBubbleItems, ...(bubbleItems ?? [])];
 
   return (
-    <div ref={rootRef} className={`glass-editor ${className ?? ""}`} {...(theme !== undefined ? { "data-theme": theme } : {})}>
+    <div ref={rootRef} className={`glass-editor${className ? ` ${className}` : ""}`} {...(theme !== undefined ? { "data-theme": theme } : {})}>
       {editor && <Gutter editor={editor} top={gutterTop} />}
       {editor && <GlassBubbleMenu editor={editor} items={bubble} />}
       <EditorContent editor={editor} />
@@ -152,6 +153,7 @@ function slashRenderer() {
       });
       container.appendChild(component.element);
       renderList(props);
+      requestAnimationFrame(() => place());
     },
     onUpdate: (props: any) => { activeProps = props; index = Math.min(index, Math.max(0, props.items.length - 1)); renderList(props); },
     onKeyDown: (props: any) => {
