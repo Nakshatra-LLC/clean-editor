@@ -1,9 +1,9 @@
 <div align="center">
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="assets/glass-editor-lockup-dark.svg">
-  <source media="(prefers-color-scheme: light)" srcset="assets/glass-editor-lockup-light.svg">
-  <img alt="Clean Editor" src="assets/glass-editor-lockup-light.svg" width="340">
+  <source media="(prefers-color-scheme: dark)" srcset="assets/clean-editor-lockup-dark.svg">
+  <source media="(prefers-color-scheme: light)" srcset="assets/clean-editor-lockup-light.svg">
+  <img alt="Clean Editor" src="assets/clean-editor-lockup-light.svg" width="340">
 </picture>
 
 <br/>
@@ -60,7 +60,7 @@ During development, link it locally instead:
 // host package.json
 {
   "dependencies": {
-    "@nakshatra.io/clean-editor": "link:../glass-editor"
+    "@nakshatra.io/clean-editor": "link:../clean-editor"
   }
 }
 ```

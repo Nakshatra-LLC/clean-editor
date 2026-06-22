@@ -34,11 +34,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Nakshatra-LLC/glass-editor.git"
+    "url": "git+https://github.com/Nakshatra-LLC/clean-editor.git"
   },
-  "homepage": "https://github.com/Nakshatra-LLC/glass-editor#readme",
+  "homepage": "https://github.com/Nakshatra-LLC/clean-editor#readme",
   "bugs": {
-    "url": "https://github.com/Nakshatra-LLC/glass-editor/issues"
+    "url": "https://github.com/Nakshatra-LLC/clean-editor/issues"
   },
   "publishConfig": {
     "access": "public",

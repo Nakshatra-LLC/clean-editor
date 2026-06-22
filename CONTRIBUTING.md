@@ -99,7 +99,7 @@ project's [MIT License](LICENSE).
 These are deliberately left for v2 / community contributions. Each should build
 on the existing hooks (`slashItems`, `bubbleItems`, `extensions`, theme
 variables) without changing the core. Browse
-[issues labeled `help wanted` / `good first issue`](https://github.com/Nakshatra-LLC/glass-editor/issues)
+[issues labeled `help wanted` / `good first issue`](https://github.com/Nakshatra-LLC/clean-editor/issues)
 to claim one (open an issue first if it doesn't exist):
 
 - **Drag-to-reorder blocks** — a custom OSS drag handle in the gutter (TipTap's
