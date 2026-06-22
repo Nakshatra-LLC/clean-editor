@@ -1,4 +1,4 @@
-# @nakshatra/glass-editor
+# @nakshatra.io/glass-editor
 
 How to work on the Glass Editor library. Written for humans and AI coding assistants.
 

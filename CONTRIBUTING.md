@@ -1,4 +1,4 @@
-# Contributing to @nakshatra/glass-editor
+# Contributing to @nakshatra.io/glass-editor
 
 Thanks for your interest in contributing! This guide covers the workflow. For the
 deeper "how this codebase works" reference (architecture, guarded patterns, AI
@@ -67,6 +67,25 @@ change is deliberate — update the guard test and explain why in your PR. See
 3. Ensure `pnpm typecheck`, `pnpm test`, and `pnpm build` all pass (CI runs them too).
 4. Open a PR with a short description of the *why*. Fill out the PR template.
 5. CI must be green to merge.
+
+## Releasing
+
+This project uses [Changesets](https://github.com/changesets/changesets) for versioning and publishing.
+
+**Contributors:** add a changeset for every PR that changes behaviour:
+
+```bash
+pnpm changeset   # prompts for bump type + summary; creates a .changeset/*.md file
+```
+
+Commit the generated `.changeset/*.md` file with your PR. The changesets/action CI bot will open a "Version Packages" PR that rolls up all pending changesets into a version bump + CHANGELOG update. Merging that PR triggers the actual npm publish.
+
+**First-time maintainer setup:**
+
+1. Confirm the `@nakshatra.io` npm scope exists and is public (register at npmjs.com under the `nakshatra.io` username if not already done).
+2. Create an npm **Automation token** (or Granular Access Token scoped to `@nakshatra.io/glass-editor`) at npmjs.com → Access Tokens.
+3. Add it as `NPM_TOKEN` under the GitHub repo → Settings → Secrets and variables → Actions → New repository secret.
+4. Enable GitHub Actions write permissions: Settings → Actions → General → Workflow permissions → "Read and write permissions".
 
 ## License
 

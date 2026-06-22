@@ -51,7 +51,7 @@ The polished "Notion"/"Agent" TipTap editors are **Pro/Cloud, not OSS**. Rather 
 npm install react react-dom @tiptap/react @tiptap/core @tiptap/pm
 
 # the editor — once published:
-npm install @nakshatra/glass-editor
+npm install @nakshatra.io/glass-editor
 ```
 
 During development, link it locally instead:
@@ -60,7 +60,7 @@ During development, link it locally instead:
 // host package.json
 {
   "dependencies": {
-    "@nakshatra/glass-editor": "link:../glass-editor"
+    "@nakshatra.io/glass-editor": "link:../glass-editor"
   }
 }
 ```
@@ -69,9 +69,9 @@ During development, link it locally instead:
 
 ```tsx
 import { useState } from "react";
-import { GlassEditor } from "@nakshatra/glass-editor";
+import { GlassEditor } from "@nakshatra.io/glass-editor";
 import type { JSONContent } from "@tiptap/react";
-import "@nakshatra/glass-editor/styles.css";
+import "@nakshatra.io/glass-editor/styles.css";
 
 const empty: JSONContent = { type: "doc", content: [] };
 
@@ -93,7 +93,7 @@ export function MyEditor() {
 The editor never imports `fetch` or a provider. You supply an `AiAdapter`; where the network call lives is entirely up to your app:
 
 ```tsx
-import { GlassEditor, type AiAdapter } from "@nakshatra/glass-editor";
+import { GlassEditor, type AiAdapter } from "@nakshatra.io/glass-editor";
 
 const ai: AiAdapter = {
   continue: (context) => myBackend.continue(context),
@@ -175,7 +175,7 @@ Glass Editor ships a **CSS-variable theme** that switches automatically between 
 Import the base styles once (sets the variables + structural layout):
 
 ```ts
-import "@nakshatra/glass-editor/styles.css";
+import "@nakshatra.io/glass-editor/styles.css";
 ```
 
 Override any token from your app's CSS:

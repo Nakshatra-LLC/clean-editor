@@ -1,5 +1,5 @@
 /**
- * Architecture guard tests for @nakshatra/glass-editor.
+ * Architecture guard tests for @nakshatra.io/glass-editor.
  *
  * These tests enforce the four invariants documented in AGENTS.md
  * § "Guarded patterns (do not break)". If a test here fails, you
