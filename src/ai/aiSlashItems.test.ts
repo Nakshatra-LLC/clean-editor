@@ -27,6 +27,30 @@ test("Ask AI calls adapter.ask with context and instruction, then inserts the re
   promptSpy.mockRestore();
 });
 
+test("ai-continue does not throw when adapter rejects and inserts nothing", async () => {
+  const ai = { continue: vi.fn().mockRejectedValue(new Error("boom")), ask: vi.fn() };
+  const ed = fakeEditor();
+  const errorSpy = vi.spyOn(console, "error").mockImplementation(() => {});
+  const item = aiSlashItems(ai).find((i) => i.id === "ai-continue")!;
+  await expect(item.run(ed)).resolves.toBeUndefined();
+  expect(ed.inserted).toHaveLength(0);
+  expect(errorSpy).toHaveBeenCalledWith("glass-editor: AI request failed", expect.any(Error));
+  errorSpy.mockRestore();
+});
+
+test("ai-ask does not throw when adapter rejects and inserts nothing", async () => {
+  const ai = { continue: vi.fn(), ask: vi.fn().mockRejectedValue(new Error("boom")) };
+  const ed = fakeEditor();
+  const promptSpy = vi.spyOn(window, "prompt").mockReturnValue("Do something");
+  const errorSpy = vi.spyOn(console, "error").mockImplementation(() => {});
+  const item = aiSlashItems(ai).find((i) => i.id === "ai-ask")!;
+  await expect(item.run(ed)).resolves.toBeUndefined();
+  expect(ed.inserted).toHaveLength(0);
+  expect(errorSpy).toHaveBeenCalledWith("glass-editor: AI request failed", expect.any(Error));
+  promptSpy.mockRestore();
+  errorSpy.mockRestore();
+});
+
 test("Ask AI returns early when window.prompt is null", async () => {
   const ai = { continue: vi.fn(), ask: vi.fn() };
   const ed = fakeEditor();
