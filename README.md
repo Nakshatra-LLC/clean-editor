@@ -23,6 +23,21 @@ Clean Editor brings a polished, "Notion-like" TipTap editing experience using **
 
 The editor knows nothing about your backend, your content model, or your AI provider. You inject all of those. That keeps it reusable: the same component powers a CMS, a document builder, or anything else, each supplying its own adapter.
 
+## Demo
+
+▶ [Live demo](https://nakshatra-llc.github.io/clean-editor/)
+
+<table>
+<tr>
+<td align="center"><strong>Dark</strong></td>
+<td align="center"><strong>Light</strong></td>
+</tr>
+<tr>
+<td><img alt="Clean Editor — dark theme" src="assets/clean-editor-demo-dark.png" width="480"></td>
+<td><img alt="Clean Editor — light theme" src="assets/clean-editor-demo-light.png" width="480"></td>
+</tr>
+</table>
+
 ## Why
 
 The polished "Notion"/"Agent" TipTap editors are **Pro/Cloud, not OSS**. Rather than pay per seat or scatter divergent editors across repos, Clean Editor builds that UX once from free primitives and publishes it as a standalone library. The authoring and AI investment becomes reusable, and there's a single editor to maintain.
@@ -35,6 +50,7 @@ The polished "Notion"/"Agent" TipTap editors are **Pro/Cloud, not OSS**. Rather 
 - **Controlled** — `value` is a ProseMirror JSON doc; `onChange(doc)` fires on every edit. Your app owns persistence, and external `value` updates sync back into the editor.
 - **Pluggable** — replace the extension set, append your own slash items (e.g. "Insert image from library"), and theme everything via your own CSS.
 - **Zero domain coupling** — no backend imports, no bundled design system, no AI provider baked in. Enforced by [guard tests](AGENTS.md#guarded-patterns-do-not-break).
+- **Live doc inspector** — pass `liveDoc` to render a built-in read-only JSON view of the current document below the editor (off by default).
 
 ## Status
 
@@ -155,6 +171,7 @@ export const VERSION: string;
 | `className` | `string` | — | Class on the editor root. |
 | `editable` | `boolean` | `true` | Toggle read-only mode. |
 | `theme` | `"light" \| "dark"` | — | Force a color theme; omit for automatic (`prefers-color-scheme`). |
+| `liveDoc` | `boolean` | `false` | Render a built-in read-only JSON inspector of the document below the editor. |
 
 **Defaults out of the box:** StarterKit + Link + TaskList + Image + Placeholder, a selection bubble menu, and the `/` slash menu with the standard block items. Everything is overridable through props.
 

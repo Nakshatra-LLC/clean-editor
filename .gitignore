@@ -5,3 +5,5 @@ demo/node_modules
 .nx/
 *.log
 *.tgz
+.vite/
+.playwright-mcp/

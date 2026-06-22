@@ -44,3 +44,17 @@ test("renders root without data-theme when theme prop is omitted", async () => {
   const root = container.querySelector(".clean-editor");
   expect(root?.getAttribute("data-theme")).toBeNull();
 });
+
+test("liveDoc=false (default): no .clean-livedoc panel rendered", async () => {
+  const { container } = render(<CleanEditor value={doc} onChange={() => {}} />);
+  expect(container.querySelector(".clean-livedoc")).toBeNull();
+});
+
+test("liveDoc=true: renders JSON inspector with aria-label and doc content", async () => {
+  const { container } = render(<CleanEditor value={doc} onChange={() => {}} liveDoc />);
+  const panel = container.querySelector(".clean-livedoc");
+  expect(panel).not.toBeNull();
+  expect(panel?.getAttribute("aria-label")).toBe("Document JSON");
+  expect(panel?.textContent).toContain("doc");
+  expect(panel?.textContent).toContain("Hello");
+});

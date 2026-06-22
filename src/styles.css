@@ -155,6 +155,22 @@
   cursor: not-allowed;
 }
 
+/* Live doc JSON inspector */
+.clean-livedoc {
+  margin-top: 0.75rem;
+  background: var(--clean-popup-bg);
+  color: var(--clean-fg);
+  border: 1px solid var(--clean-popup-border);
+  border-radius: var(--clean-radius);
+  padding: 0.75rem 1rem;
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+  font-size: 0.78rem;
+  line-height: 1.5;
+  max-height: 30rem;
+  overflow: auto;
+  white-space: pre;
+}
+
 /* Gutter */
 .clean-gutter { position: absolute; left: 0.15rem; display: flex; align-items: center; gap: 0.1rem; opacity: 0; transition: opacity 0.12s; }
 .clean-editor:hover .clean-gutter,
