@@ -52,7 +52,7 @@ export default function App() {
   return (
     <div className="demo-layout" data-demo-theme={theme}>
       <header className="demo-header">
-        <img src="/mark.svg" alt="" width={36} height={36} className="demo-logo" />
+        <img src={`${import.meta.env.BASE_URL}appicon.svg`} alt="" width={36} height={36} className="demo-logo" />
         <div>
           <h1>@nakshatra.io/clean-editor</h1>
           <p>Runnable demo — Vite + React. Press <kbd>/</kbd> for blocks, AI adapter included.</p>
