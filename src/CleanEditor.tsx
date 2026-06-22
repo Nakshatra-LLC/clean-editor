@@ -22,10 +22,12 @@ export type CleanEditorProps = {
   className?: string;
   editable?: boolean;
   theme?: "light" | "dark";
+  /** Render a built-in read-only JSON inspector of the current document below the editor. Default false. */
+  liveDoc?: boolean;
 };
 
 export function CleanEditor({
-  value, onChange, ai, extensions, slashItems, bubbleItems, placeholder, className, editable = true, theme,
+  value, onChange, ai, extensions, slashItems, bubbleItems, placeholder, className, editable = true, theme, liveDoc = false,
 }: CleanEditorProps) {
   const [aiMode, setAiMode] = useState<null | "ask" | "continue">(null);
   const [gutterTop, setGutterTop] = useState<number | null>(null);
@@ -90,6 +92,9 @@ export function CleanEditor({
       {editor && <Gutter editor={editor} top={gutterTop} />}
       {editor && <CleanBubbleMenu editor={editor} items={bubble} />}
       <EditorContent editor={editor} />
+      {liveDoc && (
+        <pre className="clean-livedoc" aria-label="Document JSON">{JSON.stringify(value, null, 2)}</pre>
+      )}
       {editor && aiMode && ai && (
         <div className="clean-askai-layer">
           <AskAiInput

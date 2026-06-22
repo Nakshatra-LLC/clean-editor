@@ -50,6 +50,7 @@ The polished "Notion"/"Agent" TipTap editors are **Pro/Cloud, not OSS**. Rather 
 - **Controlled** — `value` is a ProseMirror JSON doc; `onChange(doc)` fires on every edit. Your app owns persistence, and external `value` updates sync back into the editor.
 - **Pluggable** — replace the extension set, append your own slash items (e.g. "Insert image from library"), and theme everything via your own CSS.
 - **Zero domain coupling** — no backend imports, no bundled design system, no AI provider baked in. Enforced by [guard tests](AGENTS.md#guarded-patterns-do-not-break).
+- **Live doc inspector** — pass `liveDoc` to render a built-in read-only JSON view of the current document below the editor (off by default).
 
 ## Status
 
@@ -170,6 +171,7 @@ export const VERSION: string;
 | `className` | `string` | — | Class on the editor root. |
 | `editable` | `boolean` | `true` | Toggle read-only mode. |
 | `theme` | `"light" \| "dark"` | — | Force a color theme; omit for automatic (`prefers-color-scheme`). |
+| `liveDoc` | `boolean` | `false` | Render a built-in read-only JSON inspector of the document below the editor. |
 
 **Defaults out of the box:** StarterKit + Link + TaskList + Image + Placeholder, a selection bubble menu, and the `/` slash menu with the standard block items. Everything is overridable through props.
 

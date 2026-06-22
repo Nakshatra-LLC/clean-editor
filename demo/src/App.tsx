@@ -44,6 +44,7 @@ export default function App() {
   const [theme, setTheme] = useState<Theme>(
     matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"
   );
+  const [showJson, setShowJson] = useState(false);
 
   useEffect(() => {
     document.documentElement.setAttribute("data-demo-theme", theme);
@@ -57,6 +58,12 @@ export default function App() {
           <h1>@nakshatra.io/clean-editor</h1>
           <p>Runnable demo — Vite + React. Press <kbd>/</kbd> for blocks, AI adapter included.</p>
         </div>
+        <button
+          className="demo-theme-btn"
+          onClick={() => setShowJson(v => !v)}
+        >
+          {showJson ? "Hide JSON" : "Show JSON"}
+        </button>
         <button
           className="demo-theme-btn"
           onClick={() => setTheme(t => t === "dark" ? "light" : "dark")}
@@ -73,13 +80,9 @@ export default function App() {
             ai={mockAi}
             theme={theme}
             placeholder="Write something, or press / for blocks…"
+            liveDoc={showJson}
           />
         </div>
-
-        <section className="json-preview">
-          <h2>Live doc (JSONContent)</h2>
-          <pre>{JSON.stringify(doc, null, 2)}</pre>
-        </section>
       </main>
     </div>
   );
