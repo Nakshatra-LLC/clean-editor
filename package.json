@@ -54,7 +54,7 @@
   "dependencies": {
     "@tiptap/extension-image": "^2.8.0",
     "@tiptap/extension-link": "^2.8.0",
-    "@tiptap/extension-placeholder": "^2.8.0",
+    "@tiptap/extension-placeholder": "^3.27.1",
     "@tiptap/extension-task-item": "^2.8.0",
     "@tiptap/extension-task-list": "^2.8.0",
     "@tiptap/starter-kit": "^2.8.0",
