@@ -108,6 +108,7 @@ If the adapter rejects, the slash action inserts nothing and the editor stays us
 ## API
 
 ```ts
+import type { ReactNode } from "react";
 import type { Editor, JSONContent, Extension } from "@tiptap/react";
 
 export type AiAdapter = {

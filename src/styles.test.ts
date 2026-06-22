@@ -22,3 +22,7 @@ test("styles.css styles links with the accent color", () => {
 test("styles.css supports data-theme forced dark override", () => {
   expect(css).toContain('[data-theme="dark"]');
 });
+
+test("styles.css defines the glass-askai-layer rule", () => {
+  expect(css).toContain(".glass-askai-layer");
+});

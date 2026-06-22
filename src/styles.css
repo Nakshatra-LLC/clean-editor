@@ -108,6 +108,9 @@
 }
 .glass-bubble__input:focus { border-color: var(--glass-accent); }
 
+/* Ask-AI layer wrapper */
+.glass-askai-layer { margin: 0.5rem 0; }
+
 /* Ask-AI inline input */
 .glass-askai {
   display: flex;
