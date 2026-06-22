@@ -1,7 +1,7 @@
 import { useState } from "react";
 import type { JSONContent } from "@tiptap/react";
-import { GlassEditor, type AiAdapter } from "@nakshatra/glass-editor";
-import "@nakshatra/glass-editor/styles.css";
+import { GlassEditor, type AiAdapter } from "@nakshatra.io/glass-editor";
+import "@nakshatra.io/glass-editor/styles.css";
 
 type Theme = "light" | "dark";
 
@@ -50,7 +50,7 @@ export default function App() {
       <header className="demo-header">
         <img src="/mark.svg" alt="" width={36} height={36} className="demo-logo" />
         <div>
-          <h1>@nakshatra/glass-editor</h1>
+          <h1>@nakshatra.io/glass-editor</h1>
           <p>Runnable demo — Vite + React. Press <kbd>/</kbd> for blocks, AI adapter included.</p>
         </div>
         <button

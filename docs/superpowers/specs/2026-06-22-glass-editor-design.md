@@ -1,7 +1,7 @@
-# Glass Editor (`@nakshatra/glass-editor`) — Design
+# Glass Editor (`@nakshatra.io/glass-editor`) — Design
 
 **Date:** 2026-06-22
-**Repo:** `glass-editor` · **Package:** `@nakshatra/glass-editor` (Nakshatra LLC scope)
+**Repo:** `glass-editor` · **Package:** `@nakshatra.io/glass-editor` (Nakshatra LLC scope)
 **Scope:** A small, reusable **React + TipTap** rich-text editor with pluggable blocks, a
 slash-command registry, and an **injected AI adapter** — domain-agnostic, consumed by any host
 app (React + Vite + Tailwind).
@@ -102,7 +102,7 @@ A host app renders `<GlassEditor value={doc} onChange={setDoc} ai={adapter} />` 
 - A **CMS**: an adapter that proxies AI through its own backend; the PM `doc` is its content.
 - A **document/résumé builder**: the same component with its own adapter and domain slash items.
 
-During development a host can consume `@nakshatra/glass-editor` via a **local link**
+During development a host can consume `@nakshatra.io/glass-editor` via a **local link**
 (`file:`/`link:`); the package is **published to npm** once the API stabilizes — no per-change
 publish churn.
 
@@ -133,7 +133,7 @@ designed to add these without breaking consumers.
   Pro/Cloud.
 - **GE-D2** Dependency injection for **AI adapter**, **slash items**, and **extensions**; zero
   domain coupling (no host backend/domain imports).
-- **GE-D3** Published as **`@nakshatra/glass-editor`**; `react`/`react-dom`/`@tiptap/*` are
+- **GE-D3** Published as **`@nakshatra.io/glass-editor`**; `react`/`react-dom`/`@tiptap/*` are
   **peerDependencies**; **Vite library** build (ESM + d.ts).
 - **GE-D4** Controlled editor: `value` (PM JSON) + `onChange`; host owns persistence.
 - **GE-D5** Unstyled/structural CSS with class hooks; hosts theme via Tailwind.

@@ -1,4 +1,4 @@
-# Glass Editor (`@nakshatra/glass-editor`) Implementation Plan
+# Glass Editor (`@nakshatra.io/glass-editor`) Implementation Plan
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans. Steps use checkbox (`- [ ]`) syntax.
 >
@@ -36,7 +36,7 @@ ProseMirror breaks editing). vitest + Testing Library + jsdom for tests.
 
 ```json
 {
-  "name": "@nakshatra/glass-editor",
+  "name": "@nakshatra.io/glass-editor",
   "version": "0.0.1",
   "description": "WYSIWYG editor built with TipTap StarterKit (OSS) — pluggable blocks, slash menu, injected AI adapter.",
   "license": "MIT",
@@ -138,7 +138,7 @@ test("exports a version", () => { expect(VERSION).toBe("0.0.1"); });
 - [ ] **Step 8: Commit**
 
 ```bash
-git add -A && git commit -m "chore: scaffold vite library (@nakshatra/glass-editor)"
+git add -A && git commit -m "chore: scaffold vite library (@nakshatra.io/glass-editor)"
 ```
 
 ---
@@ -494,8 +494,8 @@ export function GlassEditor({ value, onChange, ai, extensions, slashItems, place
 ## Usage
 
 ```tsx
-import { GlassEditor, type AiAdapter } from "@nakshatra/glass-editor";
-import "@nakshatra/glass-editor/styles.css";
+import { GlassEditor, type AiAdapter } from "@nakshatra.io/glass-editor";
+import "@nakshatra.io/glass-editor/styles.css";
 
 const ai: AiAdapter = {
   continue: (text) => myBackend.continue(text),
