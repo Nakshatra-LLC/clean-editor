@@ -34,6 +34,14 @@ export function GlassEditor({ value, onChange, ai, extensions, slashItems, place
     onUpdate: ({ editor }) => onChange(editor.getJSON()),
     editorProps: { attributes: { class: "glass-editor__content" } },
   });
+  // Sync external value changes into the editor after mount (controlled component).
+  // Guard with JSON.stringify to skip redundant resets caused by the editor's own onUpdate → onChange → rerender cycle.
+  useEffect(() => {
+    if (editor && JSON.stringify(value) !== JSON.stringify(editor.getJSON())) {
+      editor.commands.setContent(value as Content, false);
+    }
+  }, [editor, value]);
+
   const items: SlashItem[] = [...(ai ? aiSlashItems(ai) : []), ...defaultSlashItems, ...(slashItems ?? [])];
   return (
     <div className={`glass-editor ${className ?? ""}`} onKeyDown={(e) => { if (e.key === "/") setSlashOpen(true); if (e.key === "Escape") setSlashOpen(false); }}>
