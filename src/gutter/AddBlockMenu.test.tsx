@@ -3,7 +3,7 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Editor } from "@tiptap/core";
 import StarterKit from "@tiptap/starter-kit";
-import { expect, test, vi } from "vitest";
+import { beforeEach, expect, test, vi } from "vitest";
 import { AddBlockMenu } from "./AddBlockMenu";
 import type { SlashItem } from "../slash/items";
 
@@ -16,6 +16,8 @@ const items: SlashItem[] = [
   { id: "h1", label: "Heading 1", group: "Style", run: vi.fn() },
   { id: "text", label: "Text", group: "Style", run: vi.fn() },
 ];
+
+beforeEach(() => vi.clearAllMocks());
 
 test("renders the slash menu with the given items", () => {
   const editor = makeEditor();

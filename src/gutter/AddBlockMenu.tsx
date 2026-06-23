@@ -11,6 +11,10 @@ export function AddBlockMenu({
   const [index, setIndex] = useState(0);
   const ref = useRef<HTMLDivElement>(null);
 
+  // Always-latest ref so the keydown handler never closes over stale values.
+  const latest = useRef({ editor, items, index, onClose });
+  latest.current = { editor, items, index, onClose };
+
   const select = (item: SlashItem) => { item.run(editor); onClose(); };
 
   // Position the popup near the cursor (best-effort; jsdom returns zeros).
@@ -33,16 +37,19 @@ export function AddBlockMenu({
   }, [editor]);
 
   // Keyboard handling mirrors the suggestion popup's reducer.
+  // Reads from `latest` ref so the handler always sees current values
+  // without needing to be re-registered on every render.
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      const r = reduceSlashKey(e.key, { index, count: items.length });
-      if (r.close) { e.preventDefault(); onClose(); return; }
-      if (r.select) { e.preventDefault(); if (items[index]) select(items[index]); return; }
+      const { editor: ed, items: its, index: idx, onClose: close } = latest.current;
+      const r = reduceSlashKey(e.key, { index: idx, count: its.length });
+      if (r.close) { e.preventDefault(); close(); return; }
+      if (r.select) { e.preventDefault(); if (its[idx]) { its[idx].run(ed); close(); } return; }
       if (r.handled) { e.preventDefault(); setIndex(r.index); }
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [index, items]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div ref={ref} className="clean-addblock">
