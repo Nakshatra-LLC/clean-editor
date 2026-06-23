@@ -1,5 +1,11 @@
 # @nakshatra.io/clean-editor
 
+## 0.1.2
+
+### Patch Changes
+
+- 097b161: `VERSION` now derives from `package.json` at build time, so it can never drift from the published version.
+
 ## 0.1.1
 
 ### Patch Changes
