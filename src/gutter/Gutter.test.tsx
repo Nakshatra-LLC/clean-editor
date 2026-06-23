@@ -12,10 +12,12 @@ import { GutterContent, Gutter } from "./Gutter";
 //   b) the onNodeChange callback passed by Gutter can be captured and exercised.
 const hoisted = vi.hoisted(() => ({
   onNodeChange: undefined as undefined | ((a: any) => void),
+  tippyOptions: undefined as undefined | unknown,
 }));
 vi.mock("@tiptap/extension-drag-handle-react", () => ({
-  DragHandle: ({ children, onNodeChange }: any) => {
+  DragHandle: ({ children, onNodeChange, tippyOptions }: any) => {
     hoisted.onNodeChange = onNodeChange;
+    hoisted.tippyOptions = tippyOptions;
     return <>{children}</>;
   },
 }));
@@ -36,6 +38,32 @@ test("Gutter renders GutterContent under a stubbed DragHandle without throwing",
   const element = document.createElement("div");
   const editor = new Editor({ element, extensions: [StarterKit], content: "<p>hi</p>" });
   const { unmount } = render(<Gutter editor={editor} onAdd={() => {}} />);
+  unmount();
+  editor.destroy();
+});
+
+test("Gutter: passes referentially STABLE onNodeChange and tippyOptions across re-renders", async () => {
+  // Regression guard. The DragHandle's plugin-registration effect depends on
+  // [element, editor, onNodeChange, pluginKey, tippyOptions]. If onNodeChange or
+  // tippyOptions change identity on render, the effect re-runs → unregister +
+  // re-register the ProseMirror plugin → editor.view.updateState() tears down ALL
+  // plugin views (including the slash/suggestion popup, firing its onExit mid-open).
+  // The controlled component re-renders on every keystroke, so unstable props here
+  // break the slash menu and the add-block menu. Both MUST be memoized.
+  const element = document.createElement("div");
+  const editor = new Editor({ element, extensions: [StarterKit], content: "<p>hi</p>" });
+
+  // rerender() flushes under act(); a fresh onAdd prop each time mirrors the parent
+  // re-rendering on every keystroke. The editor reference stays the same.
+  const { rerender, unmount } = render(<Gutter editor={editor} onAdd={() => {}} />);
+  const firstOnNodeChange = hoisted.onNodeChange;
+  const firstTippyOptions = hoisted.tippyOptions;
+
+  rerender(<Gutter editor={editor} onAdd={() => {}} />);
+
+  expect(hoisted.onNodeChange).toBe(firstOnNodeChange);
+  expect(hoisted.tippyOptions).toBe(firstTippyOptions);
+
   unmount();
   editor.destroy();
 });

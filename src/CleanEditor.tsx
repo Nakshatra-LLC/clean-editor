@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { createPortal } from "react-dom";
 import { useEditor, EditorContent, ReactRenderer, type Content, type Extension, type JSONContent } from "@tiptap/react";
 import { defaultExtensions } from "./extensions";
 import { defaultSlashItems, type SlashItem } from "./slash/items";
@@ -76,12 +77,17 @@ export function CleanEditor({
   return (
     <div ref={rootRef} className={`clean-editor${className ? ` ${className}` : ""}`} {...(theme !== undefined ? { "data-theme": theme } : {})}>
       {editor && <Gutter editor={editor} onAdd={handleAdd} />}
-      {editor && addMenuOpen && (
+      {/* Portal into the .clean-editor root (not a reconciled sibling): the DragHandle/tippy
+          reparents DOM nodes out of this subtree, so rendering AddBlockMenu inline would make
+          React's insertBefore reference a moved node and crash the tree. Portaling keeps it out
+          of that sibling list while still inheriting the editor's CSS theme variables. */}
+      {editor && addMenuOpen && rootRef.current && createPortal(
         <AddBlockMenu
           editor={editor}
           items={itemsRef.current}
           onClose={() => setAddMenuOpen(false)}
-        />
+        />,
+        rootRef.current,
       )}
       {editor && <CleanBubbleMenu editor={editor} items={bubble} />}
       <EditorContent editor={editor} />
