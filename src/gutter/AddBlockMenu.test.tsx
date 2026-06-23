@@ -1,5 +1,5 @@
 // src/gutter/AddBlockMenu.test.tsx
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Editor } from "@tiptap/core";
 import StarterKit from "@tiptap/starter-kit";
@@ -53,5 +53,30 @@ test("ArrowDown + Enter runs the second item", async () => {
   await userEvent.keyboard("{ArrowDown}{Enter}");
   expect(items[1].run).toHaveBeenCalledWith(editor);
   expect(onClose).toHaveBeenCalled();
+  editor.destroy();
+});
+
+test("clicking outside the menu closes it without running an item", () => {
+  const editor = makeEditor();
+  const onClose = vi.fn();
+  render(
+    <div>
+      <AddBlockMenu editor={editor} items={items} onClose={onClose} />
+      <button>outside</button>
+    </div>,
+  );
+  fireEvent.mouseDown(screen.getByText("outside"));
+  expect(onClose).toHaveBeenCalledTimes(1);
+  expect(items[0].run).not.toHaveBeenCalled();
+  editor.destroy();
+});
+
+test("mousedown inside the menu does not trigger the outside-click close", () => {
+  const editor = makeEditor();
+  const onClose = vi.fn();
+  render(<AddBlockMenu editor={editor} items={items} onClose={onClose} />);
+  // A non-selecting region inside the popup (the group label) must not dismiss it.
+  fireEvent.mouseDown(screen.getByText("Style"));
+  expect(onClose).not.toHaveBeenCalled();
   editor.destroy();
 });

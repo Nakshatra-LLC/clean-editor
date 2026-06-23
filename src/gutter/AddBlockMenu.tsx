@@ -36,6 +36,18 @@ export function AddBlockMenu({
     } catch { /* coords not available (e.g. jsdom) */ }
   }, [editor]);
 
+  // Dismiss on a click outside the popup (the / suggestion menu gets this for free
+  // from its plugin lifecycle; this controlled popup needs it explicitly).
+  useEffect(() => {
+    const onPointerDown = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) {
+        latest.current.onClose();
+      }
+    };
+    document.addEventListener("mousedown", onPointerDown);
+    return () => document.removeEventListener("mousedown", onPointerDown);
+  }, []);
+
   // Keyboard handling mirrors the suggestion popup's reducer.
   // Reads from `latest` ref so the handler always sees current values
   // without needing to be re-registered on every render.

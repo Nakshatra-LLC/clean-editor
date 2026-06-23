@@ -82,6 +82,9 @@ export function CleanEditor({
   useEffect(() => {
     if (editor && JSON.stringify(value) !== JSON.stringify(editor.getJSON())) {
       editor.commands.setContent(value as Content, false);
+      // The add-block menu anchors to the old selection; an external content
+      // replacement makes that position stale, so close it.
+      setAddMenuOpen(false);
     }
   }, [editor, value]);
 
