@@ -65,7 +65,7 @@ test("liveDoc=true: renders JSON inspector with aria-label and doc content", asy
   expect(panel?.textContent).toContain("Hello");
 });
 
-test("opens the add-block menu when a block is added via the gutter", async () => {
+test("add-block menu is not rendered on initial mount", async () => {
   // Render, then drive the + path directly through the exported helper wiring.
   // Because the tippy handle isn't clickable in jsdom, we assert the menu wiring
   // by simulating the onAdd callback through a test seam: the AddBlockMenu mounts
