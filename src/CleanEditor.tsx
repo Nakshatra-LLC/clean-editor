@@ -18,7 +18,15 @@ export type CleanEditorProps = {
   onChange: (doc: JSONContent) => void;
   /** AI adapter; enables Continue Writing / Ask AI. Pass a stable reference. */
   ai?: AiAdapter;
-  extensions?: Extension[];
+  /**
+   * Customize the editor's extensions.
+   * - Pass an **array** to fully replace the built-in defaults (escape hatch).
+   * - Pass a **function** `(defaults) => Extension[]` to extend/override them; it
+   *   receives the fully-wired defaults (including the working slash command), so
+   *   you can append (`[...defaults, X]`), remove (`defaults.filter(...)`), or
+   *   reorder without silently disabling the `/` menu.
+   */
+  extensions?: Extension[] | ((defaults: Extension[]) => Extension[]);
   slashItems?: SlashItem[];
   bubbleItems?: BubbleItem[];
   placeholder?: string;
@@ -49,12 +57,23 @@ export function CleanEditor({
     ...(slashItems ?? []),
   ];
 
-  const editor = useEditor({
-    editable,
-    extensions: extensions ?? defaultExtensions({
+  // Build the fully-wired defaults (slash command included). The array form of
+  // `extensions` replaces these; the function form receives them so consumers can
+  // extend/override without losing the / menu. Computed each render but only
+  // consumed by useEditor on init.
+  const buildDefaultExtensions = () =>
+    defaultExtensions({
       placeholder,
       slash: { items: () => itemsRef.current, render: slashRenderer },
-    }),
+    });
+  const resolvedExtensions =
+    typeof extensions === "function"
+      ? extensions(buildDefaultExtensions())
+      : extensions ?? buildDefaultExtensions();
+
+  const editor = useEditor({
+    editable,
+    extensions: resolvedExtensions,
     content: value as Content,
     onUpdate: ({ editor }) => onChangeRef.current(editor.getJSON()),
     editorProps: { attributes: { class: "clean-editor__content" } },

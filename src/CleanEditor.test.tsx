@@ -1,5 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import { expect, test, vi } from "vitest";
+import StarterKit from "@tiptap/starter-kit";
+import type { Extension } from "@tiptap/core";
 import { CleanEditor } from "./CleanEditor";
 
 vi.mock("@tiptap/react", async (orig) => {
@@ -63,6 +65,36 @@ test("liveDoc=true: renders JSON inspector with aria-label and doc content", asy
   expect(panel?.getAttribute("aria-label")).toBe("Document JSON");
   expect(panel?.textContent).toContain("doc");
   expect(panel?.textContent).toContain("Hello");
+});
+
+test("extensions as a function receives the fully-wired defaults (incl. slash command) and uses the returned list", async () => {
+  let received: Extension[] | null = null;
+  render(
+    <CleanEditor
+      value={doc}
+      onChange={() => {}}
+      extensions={(defaults) => {
+        received = defaults;
+        return defaults;
+      }}
+    />,
+  );
+  expect(received).not.toBeNull();
+  const names = (received as unknown as Extension[]).map((e) => e.name);
+  // Defaults handed to the consumer must be fully wired — including the slash
+  // command — so extending them does not silently disable the / menu.
+  expect(names).toContain("slashCommand");
+  expect(names).toContain("starterKit");
+  // The doc still renders (returned list is what the editor uses).
+  expect(await screen.findByText("Hello")).toBeInTheDocument();
+});
+
+test("extensions as an array still fully replaces the defaults (escape hatch)", async () => {
+  // Array form is the back-compat escape hatch: the editor uses exactly what is
+  // passed. StarterKit alone still renders paragraph text.
+  const onlyStarterKit: Extension[] = [StarterKit as unknown as Extension];
+  render(<CleanEditor value={doc} onChange={() => {}} extensions={onlyStarterKit} />);
+  expect(await screen.findByText("Hello")).toBeInTheDocument();
 });
 
 test("add-block menu is not rendered on initial mount", async () => {
